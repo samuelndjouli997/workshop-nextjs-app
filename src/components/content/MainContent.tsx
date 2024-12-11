@@ -20,7 +20,7 @@ export default function MainContent() {
     co2: null as number | null,
     humidity: null as number | null,
   });
-  const [error, setError] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const dataRef = ref(database, "Lawrence_Lessig/data");
