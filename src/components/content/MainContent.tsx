@@ -20,7 +20,7 @@ export default function MainContent() {
     co2: null as number | null,
     humidity: null as number | null,
   });
-
+  /* eslint-disable no-unused-vars */
   const [error, setError] = useState<any>(null);
 
   useEffect(() => {

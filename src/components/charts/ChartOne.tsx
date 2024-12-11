@@ -8,9 +8,7 @@ import { roundNumber } from "@/utils/roundNumber";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-type Props = {};
-
-export default function ChartOne(props: Props) {
+export default function ChartOne() {
   const [chartData, setChartData] = useState({
     labels: [] as string[], // Les dates ou timestamps
     datasets: [
