@@ -20,7 +20,6 @@ export default function MainContent() {
     co2: null as number | null,
     humidity: null as number | null,
   });
-  /* eslint-disable no-unused-vars */
   const [error, setError] = useState<any>(null);
 
   useEffect(() => {
@@ -62,8 +61,7 @@ export default function MainContent() {
           setPreviousData(roundedPreviousData);
           setLatestData(roundedLatestData);
 
-          console.log("Previous data", roundedPreviousData);
-          console.log("Latest data", roundedLatestData);
+          console.info(error);
         }
       },
       (error) => {
