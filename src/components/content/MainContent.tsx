@@ -7,6 +7,7 @@ import { ref, onValue } from "firebase/database";
 import { roundNumber } from "@/utils/roundNumber";
 import { calculatePercentageChange } from "@/utils/calculatePercentageChange";
 import ChartOne from "../charts/ChartOne";
+import DisplayMessage from "../display-message";
 
 export default function MainContent() {
   const [latestData, setLatestData] = useState({
@@ -124,6 +125,14 @@ export default function MainContent() {
         >
           <Droplets className="stroke-primary-blue-light dark:stroke-white" />
         </CardDataStats>
+      </div>
+
+      <div>
+        <DisplayMessage
+          co2={latestData.co2}
+          temperature={latestData.temperature}
+          humidity={latestData.humidity}
+        />
       </div>
 
       <div>
