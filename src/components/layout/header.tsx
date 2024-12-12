@@ -1,7 +1,6 @@
 "use client";
 import { Separator } from '@radix-ui/react-separator'
-import React from 'react'
-import { SearchInput } from '../search-input'
+import React from 'react';
 import { ModeToggle } from '../mode-toggle';
 
 export default function Header(){
