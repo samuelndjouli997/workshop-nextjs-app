@@ -8,8 +8,11 @@ import { roundNumber } from "@/utils/roundNumber";
 import { calculatePercentageChange } from "@/utils/calculatePercentageChange";
 import ChartOne from "../charts/ChartOne";
 import DisplayMessage from "../display-message";
+import ButtonList from "../button-list";
 
 export default function MainContent() {
+  const [selectedRoom, setSelectedRoom] = useState("3_2");
+
   const [latestData, setLatestData] = useState({
     temperature: null as number | null,
     co2: null as number | null,
@@ -21,10 +24,11 @@ export default function MainContent() {
     co2: null as number | null,
     humidity: null as number | null,
   });
+
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const dataRef = ref(database, "Lawrence_Lessig/data");
+    const dataRef = ref(database, `dcCampus/${selectedRoom}`);
 
     const unsubscribe = onValue(
       dataRef,
@@ -62,6 +66,9 @@ export default function MainContent() {
           setPreviousData(roundedPreviousData);
           setLatestData(roundedLatestData);
 
+          console.log("Previous data", roundedPreviousData);
+          console.log("Latest data", roundedLatestData);
+
           console.info(error);
         }
       },
@@ -71,7 +78,7 @@ export default function MainContent() {
     );
 
     return () => unsubscribe();
-  }, []);
+  }, [selectedRoom]);
 
   // Calculer les pourcentages de changement
   const temperatureChange = calculatePercentageChange(
@@ -92,6 +99,14 @@ export default function MainContent() {
     <div className="flex flex-col space-y-11">
       <div>
         <h2 className="text-2xl font-bold tracking-tight">Bonjour, Bienvenue 👋</h2>
+      </div>
+
+      <div>
+        <ButtonList
+          list={["3_2", "3_4"]}
+          onSelect={(room) => setSelectedRoom(room)}
+          selected={selectedRoom}
+        />
       </div>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-3">
