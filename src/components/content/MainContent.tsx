@@ -178,7 +178,7 @@ export default function MainContent() {
       </div>
 
       <div>
-        <ChartOne />
+        <ChartOne selectedRoom={selectedRoom} />
       </div>
     </div>
   );

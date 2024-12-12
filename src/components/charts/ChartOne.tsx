@@ -8,7 +8,11 @@ import { roundNumber } from "@/utils/roundNumber";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-export default function ChartOne() {
+type Props = {
+  selectedRoom: string; 
+};
+
+export default function ChartOne({ selectedRoom }: Props) {
   const [chartData, setChartData] = useState({
     labels: [] as string[], // Les dates ou timestamps
     datasets: [
@@ -36,19 +40,31 @@ export default function ChartOne() {
     ],
   });
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    const dataRef = ref(database, "Lawrence_Lessig/data");
+    if (!selectedRoom) return;
+
+    setLoading(true);
+
+    const dataRef = ref(database, `dcCampus/${selectedRoom}`);
 
     const unsubscribe = onValue(dataRef, (snapshot) => {
       const data = snapshot.val();
 
       if (data) {
         const keys = Object.keys(data).sort((a, b) => Number(a) - Number(b));
-        const labels = keys.map((key) => new Date(Number(key)).toLocaleString()); // Convertir les timestamps en dates lisibles
+        const labels = keys.map((key) =>
+          new Date(Number(data[key].date)).toLocaleString()
+        ); // Convertir les timestamps en dates lisibles
 
-        const temperatures = keys.map((key) => roundNumber(data[key].temperature || 0));
+        const temperatures = keys.map((key) =>
+          roundNumber(data[key].temperature || 0)
+        );
         const co2Levels = keys.map((key) => roundNumber(data[key].co2 || 0));
-        const humidities = keys.map((key) => roundNumber(data[key].humidity || 0));
+        const humidities = keys.map((key) =>
+          roundNumber(data[key].humidity || 0)
+        );
 
         setChartData({
           labels,
@@ -58,20 +74,26 @@ export default function ChartOne() {
             { ...chartData.datasets[2], data: humidities },
           ],
         });
+
+        setLoading(false);
       }
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [selectedRoom]);
 
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white dark:bg-gray-700 px-5 pb-5 pt-8 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-8">
       <div className="flex flex-wrap items-start justify-between gap-3 sm:flex-nowrap">
         <h3 className="text-lg font-semibold">Graphique des Mesures</h3>
       </div>
-      <div>
-        <Line data={chartData} />
-      </div>
+      {loading ? (
+        <p>Chargement des données...</p>
+      ) : (
+        <div>
+          <Line data={chartData} />
+        </div>
+      )}
     </div>
   );
 }
