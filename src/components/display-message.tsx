@@ -73,7 +73,7 @@ export default function DisplayMessage({ co2, temperature, humidity }: Props) {
     }
 
   return (
-    <div className={`flex justify-between p-4 rounded text-white ${backgroundColor}`}>
+    <div className={`flex justify-between p-4 rounded ${backgroundColor}`}>
         <p className="font-semibold">{message}</p>
         <Popover>
             <PopoverTrigger>
