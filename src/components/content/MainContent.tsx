@@ -9,6 +9,7 @@ import { calculatePercentageChange } from "@/utils/calculatePercentageChange";
 import ChartOne from "../charts/ChartOne";
 import DisplayMessage from "../display-message";
 import ButtonList from "../button-list";
+import { Skeleton } from "../ui/skeleton";
 
 export default function MainContent() {
   const [selectedRoom, setSelectedRoom] = useState("3_2");
@@ -27,8 +28,12 @@ export default function MainContent() {
 
   const [error, setError] = useState<string | null>(null);
 
+  const [loading, setLoading] = useState<boolean>(true);
+
   useEffect(() => {
     const dataRef = ref(database, `dcCampus/${selectedRoom}`);
+
+    setLoading(true);
 
     const unsubscribe = onValue(
       dataRef,
@@ -70,10 +75,12 @@ export default function MainContent() {
           console.log("Latest data", roundedLatestData);
 
           console.info(error);
+          setLoading(false);
         }
       },
       (error) => {
         setError(error.message);
+        setLoading(false);
       }
     );
 
@@ -103,51 +110,71 @@ export default function MainContent() {
 
       <div>
         <ButtonList
-          list={["3_2", "3_4"]}
+          list={["1_2", "3_2", "3_3", "3_4"]}
           onSelect={(room) => setSelectedRoom(room)}
           selected={selectedRoom}
         />
       </div>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-3">
-        <CardDataStats
-          title="Température"
-          value={latestData.temperature || 0}
-          mValue="°"
-          levelUp={temperatureChange.levelUp}
-          percentageValue={temperatureChange.value}
-          levelDown={temperatureChange.levelDown}
-        >
-          <ThermometerSun className="stroke-primary-blue-light dark:stroke-white" />
-        </CardDataStats>
-        <CardDataStats
-          title="CO2"
-          value={latestData.co2 || 0}
-          mValue="ppm"
-          levelUp={co2Change.levelUp}
-          percentageValue={co2Change.value} 
-          levelDown={co2Change.levelDown}
-        >
-          <Wind className="stroke-primary-blue-light dark:stroke-white" />
-        </CardDataStats>
-        <CardDataStats
-          title="Humidité"
-          value={latestData.humidity || 0}
-          mValue="%"
-          levelUp={humidityChange.levelUp}
-          percentageValue={humidityChange.value}
-          levelDown={humidityChange.levelDown}
-        >
-          <Droplets className="stroke-primary-blue-light dark:stroke-white" />
-        </CardDataStats>
+        {
+          loading ? (
+            <>
+              <Skeleton className="h-36" />
+              <Skeleton className="h-36" />
+              <Skeleton className="h-36" />
+            </>
+          ) : (
+            <>
+              <CardDataStats
+              title="Température"
+              value={latestData.temperature || 0}
+              mValue="°"
+              levelUp={temperatureChange.levelUp}
+              percentageValue={temperatureChange.value}
+              levelDown={temperatureChange.levelDown}
+            >
+              <ThermometerSun className="stroke-primary-blue-light dark:stroke-white" />
+            </CardDataStats>
+            <CardDataStats
+              title="CO2"
+              value={latestData.co2 || 0}
+              mValue="ppm"
+              levelUp={co2Change.levelUp}
+              percentageValue={co2Change.value} 
+              levelDown={co2Change.levelDown}
+            >
+              <Wind className="stroke-primary-blue-light dark:stroke-white" />
+            </CardDataStats>
+            <CardDataStats
+              title="Humidité"
+              value={latestData.humidity || 0}
+              mValue="%"
+              levelUp={humidityChange.levelUp}
+              percentageValue={humidityChange.value}
+              levelDown={humidityChange.levelDown}
+            >
+              <Droplets className="stroke-primary-blue-light dark:stroke-white" />
+            </CardDataStats>
+
+            </>
+          )
+        }
+        
       </div>
 
       <div>
-        <DisplayMessage
-          co2={latestData.co2}
-          temperature={latestData.temperature}
-          humidity={latestData.humidity}
-        />
+        {
+          loading ? (
+            <Skeleton className="h-10" />
+          ) : (
+            <DisplayMessage
+              co2={latestData.co2}
+              temperature={latestData.temperature}
+              humidity={latestData.humidity}
+            />
+          )
+        }
       </div>
 
       <div>

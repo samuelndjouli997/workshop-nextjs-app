@@ -4,7 +4,7 @@ import { getDatabase } from "firebase/database";
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  databaseURL: "https://workshop2024-27ca5-default-rtdb.europe-west1.firebasedatabase.app",
+  databaseURL: "https://workshop-3395b-default-rtdb.europe-west1.firebasedatabase.app/",
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
 };
 
