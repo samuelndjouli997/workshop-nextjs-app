@@ -71,9 +71,6 @@ export default function MainContent() {
           setPreviousData(roundedPreviousData);
           setLatestData(roundedLatestData);
 
-          console.log("Previous data", roundedPreviousData);
-          console.log("Latest data", roundedLatestData);
-
           console.info(error);
           setLoading(false);
         }
@@ -97,10 +94,6 @@ export default function MainContent() {
     latestData.humidity,
     previousData.humidity
   );
-
-  console.log("temperatureChange", temperatureChange);
-  console.log("co2Change", co2Change);
-  console.log("humidityChange", humidityChange);
 
   return (
     <div className="flex flex-col w-full space-y-11">
