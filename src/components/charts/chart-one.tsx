@@ -40,12 +40,8 @@ export default function ChartOne({ selectedRoom }: Props) {
     ],
   });
 
-  const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     if (!selectedRoom) return;
-
-    setLoading(true);
 
     const dataRef = ref(database, `dcCampus/${selectedRoom}`);
 
@@ -74,8 +70,7 @@ export default function ChartOne({ selectedRoom }: Props) {
             { ...chartData.datasets[2], data: humidities },
           ],
         });
-
-        setLoading(false);
+        
       }
     });
 
@@ -87,13 +82,9 @@ export default function ChartOne({ selectedRoom }: Props) {
       <div className="flex flex-wrap items-start justify-between gap-3 sm:flex-nowrap">
         <h3 className="text-lg font-semibold">Graphique des Mesures</h3>
       </div>
-      {loading ? (
-        <p>Chargement des données...</p>
-      ) : (
         <div>
           <Line data={chartData} />
         </div>
-      )}
     </div>
   );
 }

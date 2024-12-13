@@ -6,7 +6,7 @@ import { database } from "@/firebase/config";
 import { ref, onValue } from "firebase/database";
 import { roundNumber } from "@/utils/roundNumber";
 import { calculatePercentageChange } from "@/utils/calculatePercentageChange";
-import ChartOne from "../charts/ChartOne";
+import ChartOne from "../charts/chart-one";
 import DisplayMessage from "../display-message";
 import ButtonList from "../button-list";
 import { Skeleton } from "../ui/skeleton";
@@ -103,7 +103,7 @@ export default function MainContent() {
   console.log("humidityChange", humidityChange);
 
   return (
-    <div className="flex flex-col space-y-11">
+    <div className="flex flex-col w-full space-y-11">
       <div>
         <h2 className="text-2xl font-bold tracking-tight">Bonjour, Bienvenue 👋</h2>
       </div>
@@ -178,7 +178,13 @@ export default function MainContent() {
       </div>
 
       <div>
-        <ChartOne selectedRoom={selectedRoom} />
+        {
+          loading ? (
+            <Skeleton className="h-[320px] md:h-[1120px]" />
+          ) : (
+            <ChartOne selectedRoom={selectedRoom} />
+          )
+        }
       </div>
     </div>
   );
