@@ -57,19 +57,24 @@ export default function DisplayMessage({ co2, temperature, humidity }: Props) {
         message = "Attention : Surveillez les conditions.";
         if (co2 && co2 >= 801 && co2 <= 1200) {
         message = "Concentration élevée de CO2 détectée. Aérez la pièce.";
+        infoMessage = "Le dioxyde de carbone (CO2) est un gaz incolore et inodore. Une concentration élevée peut entraîner des maux de tête, des vertiges, des nausées et des vomissements.";
         } else if (temperature && ((temperature >= 18 && temperature <= 19) || (temperature >= 27 && temperature <= 30))) {
         message = "Température légèrement inconfortable. Ajustez si nécessaire.";
+        infoMessage = "Se sentir trop chaud ou trop froid peut affecter la concentration et le bien-être.";
         } else if (humidity && ((humidity >= 30 && humidity <= 39) || (humidity >= 61 && humidity <= 70))) {
         message = "Humidité légèrement hors normes. Prenez des mesures.";
+        infoMessage = "Un taux d'humidité légèrement élevé peut favoriser la croissance de moisissures, tandis qu'un taux légèrement bas peut entraîner une irritation des yeux et des voies respiratoires.";
         }
     } 
     else if (co2Status === "normal" && tempStatus === "normal" && humidityStatus === "normal") {
         backgroundColor = "bg-green-200 text-green-500";
         message = "Tout va bien. Conditions optimales détectées.";
+        infoMessage = "Les conditions actuelles sont optimales pour le confort et la productivité.";
     } 
     else {
         backgroundColor = "bg-gray-400";
         message = "Données insuffisantes pour évaluer les conditions.";
+        infoMessage = "Veuillez vérifier les capteurs et les connexions.";
     }
 
   return (
