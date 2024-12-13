@@ -103,7 +103,7 @@ export default function MainContent() {
 
       <div>
         <ButtonList
-          list={["1_2", "3_2", "3_3", "4_4"]}
+          list={["1_3", "3_2", "3_3", "4_4"]}
           onSelect={(room) => setSelectedRoom(room)}
           selected={selectedRoom}
         />
