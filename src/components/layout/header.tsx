@@ -6,7 +6,7 @@ import { ModeToggle } from '../mode-toggle';
 export default function Header(){
   return (
     <header className="flex h-16 shrink-0 items-center justify-between gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 mb-8">
-      <div className="flex items-center gap-2 px-4">
+      <div className="flex items-center gap-2">
         <svg 
           xmlns="http://www.w3.org/2000/svg" 
           width="120" viewBox="0 0 636.63 240">
@@ -15,7 +15,7 @@ export default function Header(){
         <Separator orientation="vertical" className="mr-2 h-4" />
       </div>
 
-      <div className="flex items-center gap-2 px-4">
+      <div className="flex items-center gap-2">
         <div className="hidden md:flex">
           {/* <SearchInput /> */}
         </div>
